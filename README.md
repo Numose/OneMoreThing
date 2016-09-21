@@ -2,4 +2,4 @@
 
 # One More Thing!
 
-![Just One More Thing, Really...](public/imgs/screenshot.png)
+![Just One More Thing, Really...](http://i.imgur.com/78pisLd.png)
