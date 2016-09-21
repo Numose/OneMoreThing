@@ -1,0 +1,168 @@
+body, html {
+  height:100%;
+}
+body {
+  margin: 0px;
+  background: url("http://i.imgur.com/ITZh5Dj.jpg") #444;
+  font-size: 18px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*  blocks */
+
+div.main {
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 60px 0 0 0;
+}
+
+div.center {
+  overflow: hidden;
+  width: 1200px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* prompts and header */
+
+div.col-left {
+  float: left;
+  width: 376px;
+  padding: 24px 0 24px 24px;
+}
+
+div.header-container {
+  overflow: hidden;
+  background: rgb(50, 50, 50);
+  border-radius: 5px;
+}
+
+div.header-container img {
+  float: left;
+  height: 60px;
+  margin-right: 12px;
+}
+
+div.header-container h2 {
+  float: left;
+  margin: 0;
+  line-height: 60px;
+  font-size: 36px;
+  color: #fff;
+}
+
+div.score {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  height: 24px;
+  margin: 12px 0;
+}
+
+div.score h3 {
+  float: left;
+  margin: 0;
+  line-height: 24px;
+}
+
+div.score button.btn-hard-mode {
+  float: right;
+  padding: 0 12px;
+  line-height: 22px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid red;
+  font-size: 14px;
+  cursor: pointer;
+  color: red;
+}
+
+div.prompt {
+  overflow: hidden;
+  margin: 0 0 24px 0;
+  padding: 5px 15px;
+  background: #fff;
+  border: 3px solid rgb(220, 220, 200);
+  border-radius: 8px;
+  line-height: 26px;
+  font-size: 16px;
+  color: rgb(50, 50, 50);
+}
+
+div.prompt strong {
+  font-weight: 800;
+  color: blue;
+}
+
+button.startButton, button.restartButton {
+  display: block;
+  width: 100%;
+  line-height: 36px;
+  font-size: 24px;
+  background: rgb(2, 152, 245);
+  border: 0;
+  border-bottom: 2px solid rgb(2, 132, 225);
+  border-radius: 5px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.restartButton {
+  display: none;
+}
+
+div.you-lose {
+  display: block;
+  display: none;
+  width: 100%;
+  margin-bottom: 12px;
+  line-height: 36px;
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  color: red;
+}
+
+/* game board area */
+
+div.col-right {
+  float: left;
+  width: 780px;
+  padding: 20px 0 20px 20px;
+}
+
+div.board {
+  overflow: hidden;
+}
+
+div.piece {
+  overflow: hidden;
+  float: left;
+  width: 18%;
+  height: 140px;
+  margin: 0 2% 2% 0;
+  cursor: pointer;
+}
+
+div.piece img {
+  width: 100%;
+  height: 100%;
+}
+
+div.piece-person {
+  border-radius: 50%;
+}
+
+div.annoy-rotate {
+  -ms-transform: rotate(190deg); /* IE 9 */
+  -webkit-transform: rotate(180deg); /* Safari */
+  transform: rotate(180deg);
+}
+
+div.annoy-scale {
+  -ms-transform: scale(0.15, 0.15); /* IE 9 */
+  -webkit-transform: scale(0.15, 0.15); /* Safari */
+  transform: scale(0.15, 0.15);
+}
