@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <title>Twittler, Underscored | A Project By Andrew Robert Cernek</title>
+    <meta type="description" content="A Twitter-like project for Hack Reactor Remote Pre-Course Accept.">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Open+Sans" rel="stylesheet">
+  </head>
+  <body>
+    
+    <header>
+      <div class="center">
+        <h1><a href="/">Twittler</a></h1>
+        <img src="imgs/andrew.jpg"/>
+      </div>
+    </header>
+    
+    <div class="center main">  
+      
+      <form id="write_twittle" class="create-twt">
+        <input id="write_twittle_message" type="text" placeholder="What's happening?"/>
+        <button type="submit">Twittle!</button>
+      </form>
+
+      <div class="feed-header">
+        <h2></h2>
+        <a id="display_home_feed">Back to Home Feed</a>
+      </div>
+      
+      <div class="show-fresh-twittles">
+        <a id="display_new_twittles">Show (<span id="num_fresh_twittles"></span>) New Twittles</a>
+      </div>
+      
+      <section id="feed">
+        <!-- start underscore html view template -->
+        <script type="text/template" class="template">
+          <div class="twt">
+            <img src="<%- ler.user.img %>"/>
+            <div class="twt-content">
+              <p>
+                <span class="twt-name"><%- ler.user.name %></span>
+                <!-- // todo: get user feed links working -->
+                <a class="twt-handle" data-user-id=<%- ler.user.id %>><%- ler.user.handle %></a>
+                <!-- // tour: used moment.js to format the time stamp -->
+                <% var timeStamp = moment(ler.created_at, "hour").fromNow(); %>
+                <span class="twt-created"><%- timeStamp %></span>
+              </p>
+              <p class="twt-msg"><%- ler.message %></p>
+            </div>
+          </div>
+        </script>
+        <!-- end template -->
+      </section>
+    
+    </div>
+    
+    <footer>
+      <div class="center">
+        <!-- tour: added an HR footer for funsies -->
+        <p>&copy; 2016 Reactor Core. All rights reserved.</p>
+        <ul>
+          <li><a href="http://admissions.hackreactor.com/" target="_blank">Apply</a></li>
+          <li><a href="http://www.hackreactor.com/terms-of-service" target="_blank">Terms</a></li>
+          <li><a href="http://www.hackreactor.com/privacy-policy" target="_blank">Privacy</a></li>
+        </ul>
+      <div>
+    </footer>
+
+    <!-- load libraries and js -->
+    <script src="https://unpkg.com/jquery@3.1.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/underscorejs/1.8.3/underscore-min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+    <script src="scripts/data_generator.js"></script>
+    <script>
+      $(function(){
+        
+        // initialize underscore template
+        _.templateSettings.variable = "ler";
+        var template = _.template(
+          $("script.template").html()
+        );
+
+        // display all twittles for a feed
+        var renderFeed = function(arr) {
+          if (currentFeed === "home") { // iterate over the entire array
+            _.each(arr, function(twittle){
+              $("section#feed").prepend(
+                template(twittle)
+              );
+            });
+          
+          } else { // filter out only specific user twittles before iterating
+            arr.filter(function(twittle){
+              return twittle.user.id === currentFeed;
+            }).forEach(function(twittle){
+              $("section#feed").prepend(
+                template(twittle)
+              );
+            });
+          }
+          $("div.show-fresh-twittles a").hide();
+          freshTwittleCache = [];
+        };
+
+        // display fresh twittles event listener
+        $("a#display_new_twittles").on("click", function(){
+          renderFeed(freshTwittleCache);
+        });
+
+        // write / create new twittles event listener
+        $("form#write_twittle").on("submit", function(e){
+          e.preventDefault();
+          // set twittle to input value or random message if none provided
+          var twtMsg = $("input#write_twittle_message").val() || randomMessage();
+          writeTwittle(5, twtMsg);
+          renderFeed(twittleDB);
+          $("input#write_twittle_message").val("");
+        });
+
+        // generate the first 10 twittles and render them
+        for(var i = 0; i < 10; i++){
+          generateRandomTwittle();
+        }
+        renderFeed(twittleDB);
+
+        // check fresh twittle cache for pending new twittles every 5 seconds; keep after initial load
+        setInterval(function(){
+          if (freshTwittleCache.length !== 0) {
+            $("span#num_fresh_twittles").text(freshTwittleCache.length);
+            $("div.show-fresh-twittles a").show();
+          }
+        }, 3000);
+
+        // wipe the feed view
+        var clearFeed = function(){
+          $("section#feed").html("");
+        };
+
+        // view home feed event listener
+        $("a#display_home_feed").on("click", function(){
+          currentFeed = "home";
+          clearFeed();
+          $("div.feed-header").hide();
+          $("form#write_twittle").show();
+          renderFeed(twittleDB);
+        });
+
+        // view user feed event listener
+        $(document).on("click", "a.twt-handle", function(){
+          currentFeed = $(this).attr("data-user-id");
+          clearFeed();
+          renderFeed(twittleDB);
+          $("div.feed-header h2").text(userDB[parseInt(currentFeed)].name + "'s Feed");
+          $("form#write_twittle").hide();
+          $("div.feed-header").show();
+        });
+        
+      });
+    
+    </script>
+  </body>
+</html>

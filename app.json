@@ -1,0 +1,13 @@
+{
+  "name": "One More Thing!",
+  "description": "A coding project.",
+  "keywords": [ "one more thing" ],
+  "repository": "https://github.com/Numose/OneMoreThing.git",
+  "logo": "",
+  "website": "http://andrewcernek.com",
+  "success_url": "/",
+  "env" : {
+    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+  }
+}
+
